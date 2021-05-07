@@ -63,6 +63,16 @@ export class DragRulerRuler extends Ruler {
 		this.draggedToken = null;
 	}
 
+  /**
+   * Handle scroll-wheel events on the Canvas during Ruler measurement.
+   * This handler will allow the destination (or waypoint) to have
+   *   increased or decreased elevation relative to the origin.
+   * @see {PlaceableObjects._onMouseWheel}
+   */
+   _onMouseWheel(event) {
+     console.log("DragRulerElevation|scroll event", event);
+   }
+
 	// The functions below aren't present in the orignal Ruler class and are added by Drag Ruler
 	dragRulerAddWaypoint(point, snap=true) {
 		if (snap)
