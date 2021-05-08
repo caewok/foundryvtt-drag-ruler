@@ -32,6 +32,11 @@ Hooks.once("ready", () => {
 	performMigrations()
 	checkDependencies();
 	Hooks.callAll("dragRuler.ready", SpeedProvider)
+
+	// For elevation ruler; could switch to optional install if not using elevation.
+	if(!game.modules.get('lib-wrapper')?.active && game.user.isGM)
+        ui.notifications.error("Module drag-ruler requires the 'libWrapper' module. Please install and activate it.");
+
 })
 
 Hooks.on("canvasReady", () => {
@@ -97,6 +102,11 @@ function handleKeys(event, key, up) {
 
 	if (key.toLowerCase() === "x") return onKeyX(up)
 	if (key.toLowerCase() === "shift") return onKeyShift(up)
+	if (key.toLowerCase() === "w") return onKeyUpArrow(up)
+	if (key.toLowerCase() === "arrowup") return onKeyUpArrow(up)
+	if (key.toLowerCase() === "s") return onKeyDownArrow(up)
+	if (key.toLowerCase() === "arrowdown") return onKeyDownArrow(up)
+
 	return false
 }
 
@@ -120,6 +130,28 @@ function onKeyShift(up) {
 	const rulerOffset = ruler.rulerOffset
 	const measurePosition = {x: mousePosition.x + rulerOffset.x, y: mousePosition.y + rulerOffset.y}
 	ruler.measure(measurePosition, {snap: up})
+}
+
+function onKeyUpArrow(up) {
+  if (up) return false;
+
+  const ruler = canvas.controls.ruler
+	if (!ruler.isDragRuler)
+		return false
+
+  console.log("DragRulerElevation|Up Arrow!");
+  return false;
+}
+
+function onKeyDownArrow(up) {
+  if (up) return false;
+
+  const ruler = canvas.controls.ruler
+	if (!ruler.isDragRuler)
+		return false
+
+  console.log("DragRulerElevation|Down Arrow!");
+  return false;
 }
 
 function onTokenLeftDragStart(event) {
