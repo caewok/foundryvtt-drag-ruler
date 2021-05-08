@@ -32,11 +32,6 @@ Hooks.once("ready", () => {
 	performMigrations()
 	checkDependencies();
 	Hooks.callAll("dragRuler.ready", SpeedProvider)
-
-	// For elevation ruler; could switch to optional install if not using elevation.
-	if(!game.modules.get('lib-wrapper')?.active && game.user.isGM)
-        ui.notifications.error("Module drag-ruler requires the 'libWrapper' module. Please install and activate it.");
-
 })
 
 Hooks.on("canvasReady", () => {
