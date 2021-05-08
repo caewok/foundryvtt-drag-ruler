@@ -3,6 +3,13 @@ import {getMovementHistory} from "./movement_tracking.js";
 import {settingsKey} from "./settings.js";
 import {getSnapPointForToken} from "./util.js";
 
+export class Pixi3DPoint extends PIXI.Point {
+  constructor(x, y, {z = 0} = {}) {
+    super(x, y);
+    this.z = z;
+  }
+}
+
 export class DragRulerRuler extends Ruler {
 	// Functions below are overridden versions of functions in Ruler
 	constructor(user, {color=null}={}) {
@@ -63,21 +70,13 @@ export class DragRulerRuler extends Ruler {
 		this.draggedToken = null;
 	}
 
-  /**
-   * Handle scroll-wheel events on the Canvas during Ruler measurement.
-   * This handler will allow the destination (or waypoint) to have
-   *   increased or decreased elevation relative to the origin.
-   * @see {PlaceableObjects._onMouseWheel}
-   */
-   _onMouseWheel(event) {
-     console.log("DragRulerElevation|scroll event", event);
-   }
 
-	// The functions below aren't present in the orignal Ruler class and are added by Drag Ruler
+
+	// The functions below aren't present in the original Ruler class and are added by Drag Ruler
 	dragRulerAddWaypoint(point, snap=true) {
 		if (snap)
 			point = getSnapPointForToken(point.x, point.y, this.draggedToken);
-		this.waypoints.push(new PIXI.Point(point.x, point.y));
+		this.waypoints.push(new Pixi3DPoint(point.x, point.y));
 		this.labels.addChild(new PreciseText("", CONFIG.canvasTextStyle));
 	}
 
