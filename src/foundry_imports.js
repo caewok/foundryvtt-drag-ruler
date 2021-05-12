@@ -132,7 +132,15 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 
 	const terrainRulerAvailable = game.modules.get("terrain-ruler")?.active && (!game.modules.get("TerrainLayer")?.active || canvas.grid.type !== CONST.GRID_TYPES.GRIDLESS);
 
+	const elevationRulerAvailable = game.modules.get("elevation-ruler")?.active;
+
 	const waypoints = this.waypoints.concat([destination]);
+
+	if(elevationRulerAvailable) {
+	  const waypoints_elevation = this.elevation_increments.concat([this.destination_elevation_increment]);
+	  const elevation_segments = [];
+	}
+
 	// Move the waypoints to the center of the grid if a size is used that measures from edge to edge
 	const centeredWaypoints = applyTokenSizeOffset(waypoints, this.draggedToken)
 	// Foundries native ruler requires the waypoints to sit in the dead center of the square to work properly
@@ -158,12 +166,25 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 		centeredRay.dragRulerVisitedSpaces = ray.dragRulerVisitedSpaces;
 		ray.dragRulerFinalState = origin.dragRulerFinalState;
 		centeredRay.dragRulerFinalState = ray.dragRulerFinalState;
-		if (ray.distance < 10) {
+		if (ray.distance < 10 && !elevationRulerAvailable) {
 			if (label) label.visible = false;
 			continue;
 		}
+
+		if(elevationRulerAvailable) {
+		  const elevated_dest = ProjectElevatedPoint(origin, centeredDest, elevation);
+      const ray_elevated = new Ray(origin, elevated_dest);
+
+      if(ray_elevated.distance < 10) {
+        if ( label ) label.visible = false;
+        continue;
+      }
+      elevation_segments.push({ray: ray_elevated, label: label});
+		}
+
 		segments.push({ ray, label });
 		centeredSegments.push({ray: centeredRay, label})
+
 	}
 
 
@@ -171,6 +192,13 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 
 	// Compute measured distance
 	const distances = measureDistances(centeredSegments, this.draggedToken, shape, {gridSpaces});
+
+	if(elevationRulerAvailable) {
+	  const distances_elevation = canvas.grid.measureDistances(elevation_segments, {gridSpaces});
+    let totalElevationDistance = 0;
+	  let GrandTotalDistance = 0;
+	  let totalElevation = 0;
+	}
 
 	let totalDistance = 0;
 	for (let [i, d] of distances.entries()) {
@@ -180,6 +208,24 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 		s.last = i === (centeredSegments.length - 1);
 		s.distance = d;
 		s.text = this._getSegmentLabel(d, totalDistance, s.last);
+
+		if(elevationRulerAvailable) {
+		  GrandTotalDistance += distances_elevation[i];
+
+		  if(waypoints_elevation[i + 1] != 0 ||
+		     (s.last && waypoints_elevation.some(w => w != 0))) {
+
+		    const elevation = waypoints_elevation[i + 1] * canvas.scene.data.gridDistance;
+		    totalElevationDistance += elevation;
+
+		    s.text = s.text + "\n" + this._getSegmentElevationLabel(elevation, totalElevationDistance, s.last);
+
+		    if(s.last) {
+		      s.text = s.text + "\n" + `[${Math.round(GrandTotalDistance * 100) / 100} ${canvas.scene.data.gridUnits}]`
+		    }
+		  }
+
+		}
 	}
 
 	// Clear the grid highlight layer
