@@ -172,7 +172,8 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 		}
 
 		if(elevationRulerAvailable) {
-		  const elevated_dest = ProjectElevatedPoint(origin, centeredDest, elevation);
+		 const elevation = waypoints_elevation[i + 1] * canvas.scene.data.grid;
+                   const elevated_dest = this.projectElevatedPoint(origin, centeredDest, elevation);
       const ray_elevated = new Ray(origin, elevated_dest);
 
       if(ray_elevated.distance < 10) {
