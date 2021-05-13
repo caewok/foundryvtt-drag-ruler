@@ -131,15 +131,13 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 		destination = getSnapPointForToken(destination.x, destination.y, this.draggedToken)
 
 	const terrainRulerAvailable = game.modules.get("terrain-ruler")?.active && (!game.modules.get("TerrainLayer")?.active || canvas.grid.type !== CONST.GRID_TYPES.GRIDLESS);
-
 	const elevationRulerAvailable = game.modules.get("elevation-ruler")?.active;
 
 	const waypoints = this.waypoints.concat([destination]);
 
-	if(elevationRulerAvailable) {
-	  const waypoints_elevation = this.elevation_increments.concat([this.destination_elevation_increment]);
-	  const elevation_segments = [];
-	}
+	// For elevation-ruler
+  const waypoints_elevation = elevationRulerAvailable ? this.elevation_increments.concat([this.destination_elevation_increment]) : [];
+  const elevation_segments = [];
 
 	// Move the waypoints to the center of the grid if a size is used that measures from edge to edge
 	const centeredWaypoints = applyTokenSizeOffset(waypoints, this.draggedToken)
@@ -172,8 +170,8 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 		}
 
 		if(elevationRulerAvailable) {
-		 const elevation = waypoints_elevation[i + 1] * canvas.scene.data.grid;
-                   const elevated_dest = this.projectElevatedPoint(origin, centeredDest, elevation);
+		  const elevation = waypoints_elevation[i + 1] * canvas.scene.data.grid;
+      const elevated_dest = this.projectElevatedPoint(origin, centeredDest, elevation);
       const ray_elevated = new Ray(origin, elevated_dest);
 
       if(ray_elevated.distance < 10) {
@@ -194,12 +192,11 @@ export function measure(destination, {gridSpaces=true, snap=false} = {}) {
 	// Compute measured distance
 	const distances = measureDistances(centeredSegments, this.draggedToken, shape, {gridSpaces});
 
-	if(elevationRulerAvailable) {
-	  const distances_elevation = canvas.grid.measureDistances(elevation_segments, {gridSpaces});
-    let totalElevationDistance = 0;
-	  let GrandTotalDistance = 0;
-	  let totalElevation = 0;
-	}
+  // For elevation ruler
+  const distances_elevation = elevationRulerAvailable ? canvas.grid.measureDistances(elevation_segments, {gridSpaces}) : 0;
+  let totalElevationDistance = 0;
+	let GrandTotalDistance = 0;
+  let totalElevation = 0;
 
 	let totalDistance = 0;
 	for (let [i, d] of distances.entries()) {
