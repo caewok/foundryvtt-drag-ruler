@@ -1,17 +1,24 @@
 {
 	"name": "drag-ruler",
-	"title": "Drag Ruler",
+	"title": "Drag Ruler (libRuler version)",
 	"description": "When dragging a token displays a ruler showing how far you've moved that token.",
-	"version": "1.9.0",
-	"minimumCoreVersion" : "0.8.5",
-	"compatibleCoreVersion" : "0.8.9",
+	"version": "This is auto replaced",
+	"minimumCoreVersion" : "9.231",
+	"compatibleCoreVersion" : "9",
 	"authors": [
 		{
 			"name": "Manuel Vögele",
 			"email": "develop@manuel-voegele.de",
 			"discord": "Stäbchenfisch#5107"
-		}
+		},
+
+		{
+      "name": "caewok",
+      "url": "https://github.com/caewok",
+      "discord": "caewok#9192"
+    }
 	],
+
 	"esmodules": [
 		"src/main.js",
 		"src/socket.js"
@@ -58,11 +65,11 @@
 		}
 	],
 	"socket": true,
-	"url": "https://github.com/manuelVo/foundryvtt-drag-ruler",
-	"download": "https://github.com/manuelVo/foundryvtt-drag-ruler/archive/v1.9.0.zip",
-	"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-drag-ruler/master/module.json",
-	"readme": "https://github.com/manuelVo/foundryvtt-drag-ruler/blob/master/README.md",
-	"changelog": "https://github.com/manuelVo/foundryvtt-drag-ruler/blob/master/CHANGELOG.md",
-	"bugs": "https://github.com/manuelVo/foundryvtt-drag-ruler/issues",
+	"url": "This is auto replaced",
+	"download": "This is auto replaced",
+	"manifest": "This is auto replaced",
+	"readme": "https://github.com/caewok/foundryvtt-drag-ruler/blob/master/README.md",
+	"changelog": "https://github.com/caewok/foundryvtt-drag-ruler/blob/master/CHANGELOG.md",
+	"bugs": "https://github.com/caewok/foundryvtt-drag-ruler/issues",
 	"allowBugReporter": true
 }
