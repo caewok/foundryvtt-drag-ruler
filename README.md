@@ -5,6 +5,8 @@ This fork of Drag Ruler offers compatibility with [libWrapper](https://github.co
 
 Please direct all issues regarding this fork to [this Github repository](https://github.com/caewok/foundryvtt-drag-ruler/issues).
 
+Install this fork of the Drag Ruler module by adding this [Manifest URL](https://github.com/caewok/foundryvtt-drag-ruler/releases/latest/download/module.json) in Foundry.
+
 # Drag Ruler
 This module shows a ruler when you drag a token or measurement template to inform you how far you've dragged it from its start point. Additionally, if you're using a grid, the spaces the token will travel though will be colored depending on your tokens speed. By default, three colors are being used: green for spaces that your token can reach by walking normally are colored green, spaces that can only be reached by dashing will be colored yellow and spaces that cannot be reached with the token's speed will be colored red. If you're using a gridless map the ruler color will change to convey this information.
 
