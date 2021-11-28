@@ -1,5 +1,10 @@
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/staebchenfisch)
 
+# libRuler compatibility fork
+This fork of Drag Ruler offers compatibility with [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) and [libRuler](https://github.com/caewok/fvtt-lib-ruler). If libWrapper is installed, this fork will use wrapped methods to increase compatibility with other libWrapper-based modules. If libRuler is installed, this fork will rely on libRuler methods to make Drag Ruler compatible with libRuler-based modules, such as [Elevation Ruler](https://github.com/caewok/fvtt-elevation-ruler).
+
+Please direct all issues regarding this fork to [this Github repository](https://github.com/caewok/foundryvtt-drag-ruler/issues).
+
 # Drag Ruler
 This module shows a ruler when you drag a token or measurement template to inform you how far you've dragged it from its start point. Additionally, if you're using a grid, the spaces the token will travel though will be colored depending on your tokens speed. By default, three colors are being used: green for spaces that your token can reach by walking normally are colored green, spaces that can only be reached by dashing will be colored yellow and spaces that cannot be reached with the token's speed will be colored red. If you're using a gridless map the ruler color will change to convey this information.
 

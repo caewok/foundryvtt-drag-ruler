@@ -1,3 +1,10 @@
+## 1.9.0-libruler
+Fork of Drag Ruler compatible with libRuler.
+
+### Compatibility
+- libWrapper
+- libRuler-based modules
+
 ## 1.9.0
 ### New features
 - On Gridless scenes, tokens can now snap to their speed limits, to make full usage of a token's movement speed easier. This feature can be temporarily disabled by pressing Shift during drag and can be disabled completely in the settings.
